@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NovaCard — Dashboard</title>
+  <title>NovaCard - Demo Dashboard</title>
 
   <style>
     * {
@@ -37,148 +37,197 @@
       color: #42a5ff;
     }
 
-    .logout {
-      color: #9eb0c4;
+    header a {
+      color: #9fb2c8;
       text-decoration: none;
       font-size: 14px;
     }
 
-    .container {
+    main {
       width: 90%;
-      max-width: 1050px;
-      margin: 45px auto;
+      max-width: 900px;
+      margin: 55px auto;
     }
 
-    .welcome {
-      margin-bottom: 30px;
-    }
-
-    .welcome p {
-      color: #91a5ba;
-      margin-top: 8px;
-    }
-
-    .demo-label {
+    .badge {
       display: inline-block;
-      background: #102943;
+      background: #0b2947;
       color: #42a5ff;
-      padding: 6px 10px;
+      padding: 7px 12px;
       border-radius: 20px;
       font-size: 11px;
       font-weight: bold;
-      margin-bottom: 12px;
+      margin-bottom: 15px;
+    }
+
+    h1 {
+      font-size: clamp(34px, 7vw, 58px);
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      color: #9fb2c8;
+      font-size: 22px;
+      line-height: 1.5;
+      margin-bottom: 35px;
     }
 
     .card {
-      background: #0c1c2e;
-      border: 1px solid #1c344d;
-      border-radius: 18px;
-      padding: 25px;
-      margin-bottom: 20px;
-    }
-
-    .virtual-card {
-      min-height: 230px;
-      background: linear-gradient(135deg, #173453, #071525);
-      border: 1px solid #315475;
       position: relative;
+      background: linear-gradient(135deg, #173654, #08192b);
+      border: 1px solid #294a69;
+      border-radius: 18px;
+      padding: 30px;
+      min-height: 220px;
+      margin-bottom: 18px;
       overflow: hidden;
+      box-shadow: 0 20px 45px rgba(0,0,0,.25);
     }
 
-    .virtual-card::after {
-      content: "DEMO";
-      position: absolute;
-      right: -20px;
-      bottom: 20px;
-      transform: rotate(-25deg);
-      color: rgba(255,255,255,.07);
-      font-size: 65px;
-      font-weight: bold;
-    }
-
-    .card-name {
+    .card-brand {
       color: #42a5ff;
-      font-weight: bold;
-      letter-spacing: 1px;
+      font-size: 25px;
+      font-weight: 800;
+      letter-spacing: 2px;
     }
 
-    .card-number {
-      margin-top: 65px;
-      font-size: 23px;
-      letter-spacing: 4px;
+    .demo-watermark {
+      position: absolute;
+      right: -25px;
+      bottom: 30px;
+      font-size: 45px;
+      color: rgba(255,255,255,.07);
+      transform: rotate(-20deg);
+      font-weight: 800;
     }
 
-    .card-info {
+    .number {
+      margin-top: 55px;
+      font-size: clamp(22px, 6vw, 34px);
+      letter-spacing: 5px;
+      word-spacing: 10px;
+    }
+
+    .card-details {
       display: flex;
       justify-content: space-between;
-      margin-top: 28px;
-      color: #9eb0c4;
+      margin-top: 35px;
+      color: #9fb2c8;
       font-size: 11px;
+    }
+
+    .pan {
+      letter-spacing: 3px;
     }
 
     .grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
+      gap: 16px;
+      margin-bottom: 18px;
     }
 
-    .label {
-      color: #91a5ba;
+    .panel {
+      background: #0b1c2e;
+      border: 1px solid #19344e;
+      border-radius: 16px;
+      padding: 22px;
+    }
+
+    .panel-label {
+      color: #9fb2c8;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    .balance {
+      font-size: 30px;
+    }
+
+    .status {
+      color: #54df8a;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .status.frozen {
+      color: #ff6b6b;
+    }
+
+    .small {
+      color: #8fa4ba;
+      margin-top: 7px;
       font-size: 13px;
     }
 
-    .value {
-      font-size: 28px;
-      margin-top: 8px;
-    }
-
-    .active {
-      color: #55d98b;
-      font-weight: bold;
-      margin-top: 8px;
-    }
-
     button {
-      margin-top: 18px;
-      padding: 12px 18px;
-      border-radius: 9px;
-      border: 1px solid #315475;
-      background: transparent;
+      margin-top: 15px;
+      background: #42a5ff;
+      border: none;
+      border-radius: 8px;
+      padding: 11px 17px;
       color: white;
+      font-weight: bold;
       cursor: pointer;
     }
 
-    .transactions h2 {
+    button.secondary {
+      background: transparent;
+      border: 1px solid #31506c;
+    }
+
+    .transactions {
+      background: #0b1c2e;
+      border: 1px solid #19344e;
+      border-radius: 16px;
+      padding: 22px;
       margin-bottom: 18px;
+    }
+
+    .transactions h2 {
+      margin-bottom: 15px;
     }
 
     .transaction {
       display: flex;
       justify-content: space-between;
       padding: 16px 0;
-      border-bottom: 1px solid #1c344d;
+      border-bottom: 1px solid #19344e;
     }
 
     .transaction:last-child {
       border-bottom: none;
     }
 
-    .small {
-      color: #91a5ba;
-      font-size: 12px;
+    .transaction small {
+      display: block;
+      color: #758da5;
       margin-top: 5px;
     }
 
     .negative {
-      color: #ff7b7b;
+      color: #ff7070;
+    }
+
+    .positive {
+      color: #54df8a;
+    }
+
+    .notice {
+      background: #0b1c2e;
+      border: 1px solid #19344e;
+      border-radius: 16px;
+      padding: 22px;
+      color: #9fb2c8;
+      line-height: 1.7;
     }
 
     footer {
       text-align: center;
-      padding: 35px;
-      color: #71859a;
-      font-size: 12px;
+      padding: 35px 20px;
+      color: #6f849a;
       border-top: 1px solid #172a40;
+      margin-top: 40px;
     }
 
     @media (max-width: 700px) {
@@ -186,12 +235,23 @@
         grid-template-columns: 1fr;
       }
 
-      .card-number {
-        font-size: 18px;
+      main {
+        margin-top: 35px;
       }
 
-      h1 {
-        font-size: 28px;
+      .card {
+        padding: 22px;
+        min-height: 200px;
+      }
+
+      .number {
+        margin-top: 45px;
+        font-size: 22px;
+        letter-spacing: 3px;
+      }
+
+      .subtitle {
+        font-size: 20px;
       }
     }
   </style>
@@ -201,38 +261,28 @@
 
 <header>
   <div class="logo">Nova<span>Card</span></div>
-
-  <a class="logout" href="account.html">
-    Demo Account
-  </a>
+  <a href="index.html">Back to Home</a>
 </header>
 
-<main class="container">
+<main>
 
-  <section class="welcome">
-    <div class="demo-label">DEMO DASHBOARD</div>
+  <div class="badge">DEMO DASHBOARD</div>
 
-    <h1 id="welcomeName">
-      Welcome, Demo User
-    </h1>
+  <h1>Welcome, Alex Demo</h1>
 
-    <p>
-      Manage your demonstration NovaCard experience.
-    </p>
-  </section>
+  <p class="subtitle">
+    Manage your demonstration NovaCard experience.
+  </p>
 
-  <section class="card virtual-card">
+  <section class="card">
 
-    <div class="card-name">
-      NOVACARD
+    <div class="card-brand">NOVACARD</div>
+
+    <div class="number">
+      <span id="cardNumber">•••• •••• •••• 4821</span>
     </div>
 
-    <div class="card-number">
-      •••• &nbsp; •••• &nbsp; •••• &nbsp; 4821
-    </div>
-
-    <div class="card-info">
-
+    <div class="card-details">
       <div>
         CARDHOLDER<br>
         <strong>DEMO USER</strong>
@@ -244,83 +294,85 @@
       </div>
 
       <div>
+        DEMO<br>
         <strong>VISA</strong>
       </div>
-
     </div>
+
+    <div class="demo-watermark">DEMO</div>
 
   </section>
 
-  <section class="grid">
+  <div class="grid">
 
-    <div class="card">
-      <div class="label">Demo balance</div>
-      <div class="value">$2,500.00</div>
-      <div class="small">
-        No real funds
-      </div>
+    <div class="panel">
+      <div class="panel-label">Demo balance</div>
+      <div class="balance">$2,500.00</div>
+      <div class="small">Display balance only</div>
     </div>
 
-    <div class="card">
-      <div class="label">Card status</div>
-      <div class="active">● Active</div>
-      <div class="small">
+    <div class="panel">
+      <div class="panel-label">Card status</div>
+      <div id="status" class="status">● Active</div>
+      <div id="statusText" class="small">
         Demonstration card
       </div>
     </div>
 
-    <div class="card">
-      <div class="label">Security</div>
-      <div class="value">Protected</div>
+    <div class="panel">
+      <div class="panel-label">Security</div>
 
-      <button onclick="freezeCard()">
+      <button
+        id="freezeButton"
+        onclick="toggleCard()">
         Freeze Card
+      </button>
+
+      <button
+        class="secondary"
+        onclick="toggleNumber()">
+        Show Number
       </button>
     </div>
 
-  </section>
+  </div>
 
-  <section class="card transactions">
+  <section class="transactions">
 
     <h2>Recent transactions</h2>
 
     <div class="transaction">
       <div>
         <strong>Online Store</strong>
-        <div class="small">Today · Demo transaction</div>
+        <small>Today · Demo transaction</small>
       </div>
-
       <strong class="negative">-$49.99</strong>
     </div>
 
     <div class="transaction">
       <div>
         <strong>Demo Deposit</strong>
-        <div class="small">Yesterday · Demonstration</div>
+        <small>Yesterday · Demonstration</small>
       </div>
-
-      <strong style="color:#55d98b;">+$500.00</strong>
+      <strong class="positive">+$500.00</strong>
     </div>
 
     <div class="transaction">
       <div>
         <strong>Subscription</strong>
-        <div class="small">Sep 25 · Demo transaction</div>
+        <small>Sep 25 · Demo transaction</small>
       </div>
-
       <strong class="negative">-$12.00</strong>
     </div>
 
   </section>
 
-  <section class="card">
-    <h2>About this dashboard</h2>
-
-    <p class="small" style="line-height:1.7; margin-top:10px;">
-      This is a demonstration interface only. It does not
-      provide real credit, hold funds, issue payment cards,
-      or process real transactions.
-    </p>
+  <section class="notice">
+    <strong>About this dashboard</strong>
+    <br><br>
+    This is a demonstration interface only. It does not
+    provide real credit, hold funds, issue payment cards,
+    or process real transactions.
   </section>
 
 </main>
@@ -330,19 +382,54 @@
 </footer>
 
 <script>
-  const savedName = localStorage.getItem("novaDemoName");
 
-  if (savedName) {
-    document.getElementById("welcomeName").textContent =
-      "Welcome, " + savedName;
+  let frozen = false;
+  let revealed = false;
+
+  function toggleCard() {
+
+    frozen = !frozen;
+
+    const status = document.getElementById("status");
+    const statusText = document.getElementById("statusText");
+    const button = document.getElementById("freezeButton");
+
+    if (frozen) {
+
+      status.textContent = "● Frozen";
+      status.classList.add("frozen");
+
+      statusText.textContent =
+        "Demonstration card is frozen";
+
+      button.textContent = "Unfreeze Card";
+
+    } else {
+
+      status.textContent = "● Active";
+      status.classList.remove("frozen");
+
+      statusText.textContent =
+        "Demonstration card";
+
+      button.textContent = "Freeze Card";
+    }
   }
 
-  function freezeCard() {
-    alert(
-      "Demo mode: your demonstration card has been frozen. No real card was affected."
-    );
+  function toggleNumber() {
+
+    revealed = !revealed;
+
+    const number = document.getElementById("cardNumber");
+
+    if (revealed) {
+      number.textContent = "4242 4242 4242 4821";
+    } else {
+      number.textContent = "•••• •••• •••• 4821";
+    }
   }
+
 </script>
 
 </body>
-  </html>
+        </html>
