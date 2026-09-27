@@ -253,7 +253,70 @@
       .subtitle {
         font-size: 20px;
       }
-    }
+    .modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.75);
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 1000;
+}
+
+.modal.show {
+  display: flex;
+}
+
+.modal-box {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  background: #0b1c2e;
+  border: 1px solid #294a69;
+  border-radius: 18px;
+  padding: 28px;
+  box-shadow: 0 25px 70px rgba(0,0,0,.5);
+}
+
+.modal-box h2 {
+  font-size: 28px;
+  margin: 10px 0;
+}
+
+.modal-amount {
+  font-size: 34px;
+  font-weight: bold;
+  margin: 20px 0 8px;
+}
+
+.modal-box p {
+  color: #9fb2c8;
+}
+
+.modal-info {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 15px 0;
+  border-bottom: 1px solid #19344e;
+  color: #9fb2c8;
+}
+
+.modal-info strong {
+  color: white;
+}
+
+.close {
+  position: absolute;
+  top: 12px;
+  right: 15px;
+  background: transparent;
+  color: white;
+  font-size: 28px;
+  padding: 4px 10px;
+  margin: 0;
+}
   </style>
 </head>
 
@@ -369,7 +432,35 @@
   </section>
 
 </main>
+<div id="transactionModal" class="modal">
+  <div class="modal-box">
 
+    <button class="close" onclick="closeTransaction()">×</button>
+
+    <div class="badge">DEMO TRANSACTION</div>
+
+    <h2 id="modalTitle">Transaction</h2>
+
+    <div class="modal-amount" id="modalAmount"></div>
+
+    <p id="modalDate"></p>
+
+    <div class="modal-info">
+      <strong>Status</strong>
+      <span>Demonstration only</span>
+    </div>
+
+    <div class="modal-info">
+      <strong>Reference</strong>
+      <span>DEMO-4821</span>
+    </div>
+
+    <button onclick="closeTransaction()">
+      Close
+    </button>
+
+  </div>
+  </div>
 <footer>
   © 2026 NovaCard · Demonstration website
 </footer>
@@ -421,7 +512,34 @@
       number.textContent = "•••• •••• •••• 4821";
     }
   }
+function showTransaction(title, amount, date) {
 
+  document.getElementById("modalTitle").textContent = title;
+  document.getElementById("modalAmount").textContent = amount;
+  document.getElementById("modalDate").textContent =
+    date + " · Demo transaction";
+
+  document
+    .getElementById("transactionModal")
+    .classList.add("show");
+}
+
+function closeTransaction() {
+
+  document
+    .getElementById("transactionModal")
+    .classList.remove("show");
+}
+
+document
+  .getElementById("transactionModal")
+  .addEventListener("click", function(event) {
+
+    if (event.target === this) {
+      closeTransaction();
+    }
+
+  });
 </script>
 
 </body>
