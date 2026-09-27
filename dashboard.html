@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NovaCard — Dashboard</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #06111f;
+      color: white;
+      min-height: 100vh;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 6%;
+      background: #071321;
+      border-bottom: 1px solid #172a40;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: 800;
+    }
+
+    .logo span {
+      color: #42a5ff;
+    }
+
+    .logout {
+      color: #9eb0c4;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1050px;
+      margin: 45px auto;
+    }
+
+    .welcome {
+      margin-bottom: 30px;
+    }
+
+    .welcome p {
+      color: #91a5ba;
+      margin-top: 8px;
+    }
+
+    .demo-label {
+      display: inline-block;
+      background: #102943;
+      color: #42a5ff;
+      padding: 6px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: bold;
+      margin-bottom: 12px;
+    }
+
+    .card {
+      background: #0c1c2e;
+      border: 1px solid #1c344d;
+      border-radius: 18px;
+      padding: 25px;
+      margin-bottom: 20px;
+    }
+
+    .virtual-card {
+      min-height: 230px;
+      background: linear-gradient(135deg, #173453, #071525);
+      border: 1px solid #315475;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .virtual-card::after {
+      content: "DEMO";
+      position: absolute;
+      right: -20px;
+      bottom: 20px;
+      transform: rotate(-25deg);
+      color: rgba(255,255,255,.07);
+      font-size: 65px;
+      font-weight: bold;
+    }
+
+    .card-name {
+      color: #42a5ff;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    .card-number {
+      margin-top: 65px;
+      font-size: 23px;
+      letter-spacing: 4px;
+    }
+
+    .card-info {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 28px;
+      color: #9eb0c4;
+      font-size: 11px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .label {
+      color: #91a5ba;
+      font-size: 13px;
+    }
+
+    .value {
+      font-size: 28px;
+      margin-top: 8px;
+    }
+
+    .active {
+      color: #55d98b;
+      font-weight: bold;
+      margin-top: 8px;
+    }
+
+    button {
+      margin-top: 18px;
+      padding: 12px 18px;
+      border-radius: 9px;
+      border: 1px solid #315475;
+      background: transparent;
+      color: white;
+      cursor: pointer;
+    }
+
+    .transactions h2 {
+      margin-bottom: 18px;
+    }
+
+    .transaction {
+      display: flex;
+      justify-content: space-between;
+      padding: 16px 0;
+      border-bottom: 1px solid #1c344d;
+    }
+
+    .transaction:last-child {
+      border-bottom: none;
+    }
+
+    .small {
+      color: #91a5ba;
+      font-size: 12px;
+      margin-top: 5px;
+    }
+
+    .negative {
+      color: #ff7b7b;
+    }
+
+    footer {
+      text-align: center;
+      padding: 35px;
+      color: #71859a;
+      font-size: 12px;
+      border-top: 1px solid #172a40;
+    }
+
+    @media (max-width: 700px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .card-number {
+        font-size: 18px;
+      }
+
+      h1 {
+        font-size: 28px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">Nova<span>Card</span></div>
+
+  <a class="logout" href="account.html">
+    Demo Account
+  </a>
+</header>
+
+<main class="container">
+
+  <section class="welcome">
+    <div class="demo-label">DEMO DASHBOARD</div>
+
+    <h1 id="welcomeName">
+      Welcome, Demo User
+    </h1>
+
+    <p>
+      Manage your demonstration NovaCard experience.
+    </p>
+  </section>
+
+  <section class="card virtual-card">
+
+    <div class="card-name">
+      NOVACARD
+    </div>
+
+    <div class="card-number">
+      •••• &nbsp; •••• &nbsp; •••• &nbsp; 4821
+    </div>
+
+    <div class="card-info">
+
+      <div>
+        CARDHOLDER<br>
+        <strong>DEMO USER</strong>
+      </div>
+
+      <div>
+        EXPIRES<br>
+        <strong>12/30</strong>
+      </div>
+
+      <div>
+        <strong>VISA</strong>
+      </div>
+
+    </div>
+
+  </section>
+
+  <section class="grid">
+
+    <div class="card">
+      <div class="label">Demo balance</div>
+      <div class="value">$2,500.00</div>
+      <div class="small">
+        No real funds
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="label">Card status</div>
+      <div class="active">● Active</div>
+      <div class="small">
+        Demonstration card
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="label">Security</div>
+      <div class="value">Protected</div>
+
+      <button onclick="freezeCard()">
+        Freeze Card
+      </button>
+    </div>
+
+  </section>
+
+  <section class="card transactions">
+
+    <h2>Recent transactions</h2>
+
+    <div class="transaction">
+      <div>
+        <strong>Online Store</strong>
+        <div class="small">Today · Demo transaction</div>
+      </div>
+
+      <strong class="negative">-$49.99</strong>
+    </div>
+
+    <div class="transaction">
+      <div>
+        <strong>Demo Deposit</strong>
+        <div class="small">Yesterday · Demonstration</div>
+      </div>
+
+      <strong style="color:#55d98b;">+$500.00</strong>
+    </div>
+
+    <div class="transaction">
+      <div>
+        <strong>Subscription</strong>
+        <div class="small">Sep 25 · Demo transaction</div>
+      </div>
+
+      <strong class="negative">-$12.00</strong>
+    </div>
+
+  </section>
+
+  <section class="card">
+    <h2>About this dashboard</h2>
+
+    <p class="small" style="line-height:1.7; margin-top:10px;">
+      This is a demonstration interface only. It does not
+      provide real credit, hold funds, issue payment cards,
+      or process real transactions.
+    </p>
+  </section>
+
+</main>
+
+<footer>
+  © 2026 NovaCard · Demonstration website
+</footer>
+
+<script>
+  const savedName = localStorage.getItem("novaDemoName");
+
+  if (savedName) {
+    document.getElementById("welcomeName").textContent =
+      "Welcome, " + savedName;
+  }
+
+  function freezeCard() {
+    alert(
+      "Demo mode: your demonstration card has been frozen. No real card was affected."
+    );
+  }
+</script>
+
+</body>
+  </html>
