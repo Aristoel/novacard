@@ -2,678 +2,1262 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
   <title>NovaCard - Demo Dashboard</title>
 
   <style>
+    /* ================================
+       RESET
+    ================================= */
+
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
 
-    body {
-      font-family: Arial, sans-serif;
-      background: #06111f;
-      color: white;
-      min-height: 100vh;
+    html {
+      width: 100%;
+      min-height: 100%;
+      overflow-x: hidden;
     }
 
+    body {
+      width: 100%;
+      min-height: 100vh;
+      overflow-x: hidden;
+
+      font-family: Arial, Helvetica, sans-serif;
+
+      background: #06111f;
+      color: #ffffff;
+    }
+
+    button {
+      font-family: inherit;
+    }
+
+
+    /* ================================
+       HEADER
+    ================================= */
+
     header {
+      width: 100%;
+
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
+
+      gap: 20px;
+
       padding: 18px 6%;
+
       background: #071321;
+
       border-bottom: 1px solid #172a40;
     }
 
     .logo {
+      color: #42a5ff;
+
       font-size: 24px;
       font-weight: 800;
-    }
 
-    .logo span {
-      color: #42a5ff;
+      letter-spacing: 1px;
     }
 
     header a {
       color: #9fb2c8;
+
       text-decoration: none;
+
       font-size: 14px;
     }
 
+
+    /* ================================
+       MAIN
+    ================================= */
+
     main {
       width: 90%;
-      max-width: 900px;
-      margin: 55px auto;
+      max-width: 1000px;
+
+      margin: 55px auto 40px;
     }
+
+
+    /* ================================
+       INTRO
+    ================================= */
 
     .badge {
       display: inline-block;
+
       background: #0b2947;
       color: #42a5ff;
+
       padding: 7px 12px;
+
       border-radius: 20px;
+
       font-size: 11px;
       font-weight: bold;
+
       margin-bottom: 15px;
     }
 
     h1 {
       font-size: clamp(34px, 7vw, 58px);
-      margin-bottom: 8px;
+
+      line-height: 1.05;
+
+      margin-bottom: 12px;
     }
 
     .subtitle {
       color: #9fb2c8;
-      font-size: 22px;
+
+      font-size: clamp(18px, 3vw, 22px);
+
       line-height: 1.5;
+
       margin-bottom: 35px;
     }
 
+
+    /* ================================
+       DEMO CARD
+    ================================= */
+
     .card {
       position: relative;
-      background: linear-gradient(135deg, #173654, #08192b);
-      border: 1px solid #294a69;
-      border-radius: 18px;
-      padding: 30px;
+
+      width: 100%;
+
       min-height: 220px;
+
+      padding: 30px;
+
       margin-bottom: 18px;
+
       overflow: hidden;
-      box-shadow: 0 20px 45px rgba(0,0,0,.25);
+
+      background:
+        linear-gradient(
+          135deg,
+          #173654,
+          #08192b
+        );
+
+      border: 1px solid #294a69;
+
+      border-radius: 18px;
+
+      box-shadow:
+        0 20px 45px rgba(0, 0, 0, 0.25);
     }
 
     .card-brand {
       color: #42a5ff;
+
       font-size: 25px;
       font-weight: 800;
+
       letter-spacing: 2px;
     }
 
     .demo-watermark {
       position: absolute;
+
       right: -25px;
       bottom: 30px;
+
+      color: rgba(255, 255, 255, 0.07);
+
       font-size: 45px;
-      color: rgba(255,255,255,.07);
-      transform: rotate(-20deg);
       font-weight: 800;
+
+      transform: rotate(-20deg);
+
+      pointer-events: none;
     }
 
     .number {
       margin-top: 55px;
-      font-size: clamp(22px, 6vw, 34px);
-      letter-spacing: 5px;
-      word-spacing: 10px;
+
+      font-size: clamp(20px, 4vw, 34px);
+
+      letter-spacing: 4px;
+
+      word-spacing: 8px;
+
+      overflow-wrap: anywhere;
     }
 
     .card-details {
       display: flex;
+
       justify-content: space-between;
+
+      gap: 15px;
+
       margin-top: 35px;
+
       color: #9fb2c8;
+
       font-size: 11px;
     }
 
-    .pan {
-      letter-spacing: 3px;
+    .card-details strong {
+      display: inline-block;
+
+      margin-top: 5px;
+
+      color: #ffffff;
+
+      font-size: 14px;
     }
 
+
+    /* ================================
+       DASHBOARD GRID
+    ================================= */
+
     .grid {
+      width: 100%;
+
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+
+      grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
       gap: 16px;
+
       margin-bottom: 18px;
     }
 
     .panel {
-      background: #0b1c2e;
-      border: 1px solid #19344e;
-      border-radius: 16px;
+      width: 100%;
+      min-width: 0;
+
       padding: 22px;
+
+      background: #0b1c2e;
+
+      border: 1px solid #19344e;
+
+      border-radius: 16px;
     }
 
     .panel-label {
       color: #9fb2c8;
-      font-size: 14px;
+
+      font-size: 13px;
+
       margin-bottom: 10px;
     }
 
     .balance {
       font-size: 30px;
-    }
 
-    .status {
-      color: #54df8a;
-      font-size: 24px;
-      font-weight: bold;
-    }
+      font-weight: 700;
 
-    .status.frozen {
-      color: #ff6b6b;
+      margin-bottom: 5px;
     }
 
     .small {
-      color: #8fa4ba;
-      margin-top: 7px;
-      font-size: 13px;
+      color: #7f95aa;
+
+      font-size: 12px;
+
+      line-height: 1.5;
     }
 
+    .status {
+      color: #50d890;
+
+      font-weight: 700;
+
+      margin-bottom: 5px;
+    }
+
+
+    /* ================================
+       BUTTONS
+    ================================= */
+
     button {
-      margin-top: 15px;
+      width: 100%;
+
+      border: 0;
+
+      border-radius: 10px;
+
+      padding: 12px 14px;
+
+      margin-top: 8px;
+
       background: #42a5ff;
-      border: none;
-      border-radius: 8px;
-      padding: 11px 17px;
-      color: white;
-      font-weight: bold;
+
+      color: #06111f;
+
+      font-weight: 700;
+
       cursor: pointer;
     }
 
-    button.secondary {
-      background: transparent;
-      border: 1px solid #31506c;
+    button:hover {
+      opacity: 0.9;
     }
 
+    button.secondary {
+      background: #173653;
+
+      color: #ffffff;
+    }
+
+    button.danger {
+      background: #d94b5b;
+
+      color: #ffffff;
+    }
+
+
+    /* ================================
+       TRANSACTIONS
+    ================================= */
+
     .transactions {
-      background: #0b1c2e;
-      border: 1px solid #19344e;
-      border-radius: 16px;
-      padding: 22px;
+      width: 100%;
+
+      margin-top: 18px;
       margin-bottom: 18px;
     }
 
-    .transactions h2 {
-      margin-bottom: 15px;
+    .section-title {
+      margin-bottom: 12px;
+
+      font-size: 18px;
+    }
+
+    .transaction-list {
+      width: 100%;
+
+      display: grid;
+
+      grid-template-columns: 1fr;
+
+      gap: 10px;
     }
 
     .transaction {
+      width: 100%;
+      min-width: 0;
+
       display: flex;
+
+      align-items: center;
       justify-content: space-between;
-      padding: 16px 0;
-      border-bottom: 1px solid #19344e;
+
+      gap: 20px;
+
+      padding: 17px;
+
+      background: #0b1c2e;
+
+      border: 1px solid #19344e;
+
+      border-radius: 14px;
+
+      cursor: pointer;
     }
 
-    .transaction:last-child {
-      border-bottom: none;
+    .transaction:hover {
+      border-color: #42a5ff;
+    }
+
+    .transaction strong {
+      display: block;
+
+      margin-bottom: 5px;
     }
 
     .transaction small {
-      display: block;
-      color: #758da5;
-      margin-top: 5px;
-    }
+      color: #7f95aa;
 
-    .negative {
-      color: #ff7070;
+      font-size: 12px;
     }
 
     .positive {
-      color: #54df8a;
+      color: #50d890;
+
+      white-space: nowrap;
     }
+
+    .negative {
+      color: #ff6878;
+
+      white-space: nowrap;
+    }
+
+
+    /* ================================
+       ABOUT
+    ================================= */
 
     .notice {
-      background: #0b1c2e;
-      border: 1px solid #19344e;
-      border-radius: 16px;
+      width: 100%;
+
+      display: block;
+
       padding: 22px;
-      color: #9fb2c8;
-      line-height: 1.7;
+
+      margin-top: 18px;
+
+      background: #0b1c2e;
+
+      border: 1px solid #19344e;
+
+      border-radius: 16px;
+
+      color: #ffffff;
+
+      line-height: 1.6;
     }
 
-    footer {
-      text-align: center;
-      padding: 35px 20px;
-      color: #6f849a;
-      border-top: 1px solid #172a40;
-      margin-top: 40px;
+    .notice strong {
+      display: block;
+
+      margin-bottom: 8px;
     }
+
+
+    /* ================================
+       TRANSACTION MODAL
+    ================================= */
+
+    .modal {
+      position: fixed;
+
+      inset: 0;
+
+      z-index: 99999;
+
+      width: 100vw;
+      height: 100vh;
+
+      display: none;
+
+      align-items: center;
+      justify-content: center;
+
+      padding: 20px;
+
+      background: rgba(0, 0, 0, 0.78);
+
+      overflow-y: auto;
+    }
+
+    .modal.show {
+      display: flex;
+    }
+
+    .modal-box {
+      position: relative;
+
+      width: 100%;
+      max-width: 430px;
+
+      max-height: 90vh;
+
+      overflow-y: auto;
+
+      padding: 28px;
+
+      background: #0b1c2e;
+
+      border: 1px solid #294a69;
+
+      border-radius: 18px;
+
+      box-shadow:
+        0 25px 70px rgba(0, 0, 0, 0.55);
+    }
+
+    .close {
+      position: absolute;
+
+      top: 12px;
+      right: 12px;
+
+      width: 40px;
+      height: 40px;
+
+      margin: 0;
+
+      padding: 0;
+
+      border-radius: 50%;
+
+      background: #173653;
+
+      color: #ffffff;
+
+      font-size: 22px;
+
+      line-height: 40px;
+
+      text-align: center;
+    }
+
+    .modal-box h2 {
+      margin-top: 20px;
+
+      margin-bottom: 12px;
+
+      font-size: 26px;
+    }
+
+    .modal-amount {
+      margin-bottom: 10px;
+
+      font-size: 30px;
+
+      font-weight: 700;
+    }
+
+    .modal-box p {
+      color: #9fb2c8;
+
+      margin-bottom: 18px;
+
+      line-height: 1.5;
+    }
+
+    .modal-info {
+      width: 100%;
+
+      padding: 14px;
+
+      margin-top: 10px;
+
+      background: #071321;
+
+      border-radius: 10px;
+
+      color: #9fb2c8;
+    }
+
+    .modal-info strong {
+      color: #ffffff;
+    }
+
+
+    /* ================================
+       TABLET
+    ================================= */
+
+    @media (max-width: 850px) {
+
+      main {
+        width: 92%;
+        margin-top: 40px;
+      }
+
+      .grid {
+        grid-template-columns:
+          repeat(2, minmax(0, 1fr));
+      }
+
+      .transaction-list {
+        grid-template-columns: 1fr;
+      }
+    }
+
+
+    /* ================================
+       MOBILE
+    ================================= */
 
     @media (max-width: 700px) {
-      .grid {
-        grid-template-columns: 1fr;
+
+      header {
+        padding: 16px 5%;
+      }
+
+      .logo {
+        font-size: 21px;
+      }
+
+      header a {
+        font-size: 12px;
       }
 
       main {
+        width: 92%;
+
         margin-top: 35px;
+        margin-bottom: 30px;
+      }
+
+      h1 {
+        font-size: 36px;
+      }
+
+      .subtitle {
+        font-size: 18px;
+
+        margin-bottom: 25px;
       }
 
       .card {
         padding: 22px;
-        min-height: 200px;
+
+        min-height: 205px;
+
+        border-radius: 16px;
+      }
+
+      .card-brand {
+        font-size: 21px;
       }
 
       .number {
         margin-top: 45px;
-        font-size: 22px;
-        letter-spacing: 3px;
-      }
 
-      .subtitle {
         font-size: 20px;
+
+        letter-spacing: 2px;
+
+        word-spacing: 5px;
       }
-    .modal {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,.75);
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  z-index: 1000;
-}
 
-.modal.show {
-  display: flex;
-}
+      .card-details {
+        margin-top: 28px;
 
-.modal-box {
-  position: relative;
-  width: 100%;
-  max-width: 420px;
-  background: #0b1c2e;
-  border: 1px solid #294a69;
-  border-radius: 18px;
-  padding: 28px;
-  box-shadow: 0 25px 70px rgba(0,0,0,.5);
-}
-
-.modal-box h2 {
-  font-size: 28px;
-  margin: 10px 0;
-}
-
-.modal-amount {
-  font-size: 34px;
-  font-weight: bold;
-  margin: 20px 0 8px;
-}
-
-.modal-box p {
-  color: #9fb2c8;
-}
-
-.modal-info {
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
-  padding: 15px 0;
-  border-bottom: 1px solid #19344e;
-  color: #9fb2c8;
-}
-
-.modal-info strong {
-  color: white;
-}
-
-.close {
-  position: absolute;
-  top: 12px;
-  right: 15px;
-  background: transparent;
-  color: white;
-  font-size: 28px;
-  padding: 4px 10px;
-  margin: 0;
-}
-      /* Mobile layout fixes */
-@media (max-width: 700px) {
-
-  .grid {
-    grid-template-columns: 1fr !important;
-  }
-
-  .transactions {
-    display: block !important;
-    width: 100% !important;
-  }
-
-  .transaction {
-    width: 100% !important;
-    display: flex !important;
-    justify-content: space-between !important;
-    align-items: center !important;
-    gap: 15px !important;
-  }
-
-  .notice {
-    width: 100% !important;
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-  }
-
-  main {
-    width: 100% !important;
-    max-width: 100% !important;
-    padding-left: 16px !important;
-    padding-right: 16px !important;
-    box-sizing: border-box !important;
-  }
-
-  header {
-    padding-left: 16px !important;
-    padding-right: 16px !important;
-  }
-
-  /* Mobile transaction popup */
-  .modal {
-    position: fixed !important;
-    inset: 0 !important;
-    width: 100% !important;
-    height: 100% !important;
-    display: none !important;
-    align-items: center !important;
-    justify-content: center !important;
-    background: rgba(0, 0, 0, 0.75) !important;
-    z-index: 9999 !important;
-    padding: 20px !important;
-    box-sizing: border-box !important;
-  }
-
-  .modal.show {
-    display: flex !important;
-  }
-
-  .modal-box {
-    width: 100% !important;
-    max-width: 420px !important;
-    max-height: 90vh !important;
-    overflow-y: auto !important;
-    box-sizing: border-box !important;
-    position: relative !important;
-    border-radius: 18px !important;
-  }
-
-  .modal-info {
-    width: 100% !important;
-    box-sizing: border-box !important;
-  }
-
-  .modal-box button {
-    max-width: 100% !important;
-  }
-  }
-      /* UNIVERSAL TRANSACTION MODAL */
-.modal {
-  position: fixed !important;
-  inset: 0 !important;
-  width: 100vw !important;
-  height: 100vh !important;
-  display: none !important;
-  align-items: center !important;
-  justify-content: center !important;
-  background: rgba(0, 0, 0, 0.75) !important;
-  z-index: 99999 !important;
-  padding: 20px !important;
-  box-sizing: border-box !important;
-}
-
-.modal.show {
-  display: flex !important;
-}
-
-.modal-box {
-  width: 100% !important;
-  max-width: 420px !important;
-  max-height: 90vh !important;
-  overflow-y: auto !important;
-  box-sizing: border-box !important;
-  position: relative !important;
-  margin: 0 auto !important;
-  border-radius: 18px !important;
-}
-
-.modal-info {
-  width: 100% !important;
-  box-sizing: border-box !important;
-}
-
-.modal-box button {
-  max-width: 100% !important;
-  }
-      .about-panel {
-  grid-column: 1 / -1 !important;
-  width: 100% !important;
-  box-sizing: border-box !important;
+        font-size: 9px;
       }
+
+      .card-details strong {
+        font-size: 12px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+
+        gap: 12px;
+      }
+
+      .panel {
+        padding: 20px;
+      }
+
+      .balance {
+        font-size: 27px;
+      }
+
+      .transaction {
+        padding: 15px;
+
+        gap: 12px;
+      }
+
+      .transaction strong {
+        font-size: 14px;
+      }
+
+      .transaction small {
+        font-size: 11px;
+      }
+
       .notice {
-  width: 100% !important;
-  display: block !important;
-  box-sizing: border-box !important;
-  margin-top: 18px !important;
-  padding: 22px !important;
-  background: #0b1c2e !important;
-  border: 1px solid #19344e !important;
-  border-radius: 16px !important;
-  color: #ffffff !important;
-  line-height: 1.6 !important;
-  grid-column: 1 / -1 !important;
+        padding: 20px;
+
+        font-size: 14px;
       }
+
+      .modal {
+        padding: 14px;
+      }
+
+      .modal-box {
+        max-width: 100%;
+
+        padding: 24px 20px;
+
+        border-radius: 16px;
+      }
+    }
+
+
+    /* ================================
+       VERY SMALL PHONES
+    ================================= */
+
+    @media (max-width: 380px) {
+
+      main {
+        width: 94%;
+      }
+
+      .number {
+        font-size: 17px;
+
+        letter-spacing: 1px;
+
+        word-spacing: 3px;
+      }
+
+      .card-details {
+        gap: 8px;
+      }
+
+      .card-details strong {
+        font-size: 10px;
+      }
+
+      .transaction {
+        flex-direction: column;
+
+        align-items: flex-start;
+      }
+
+      .positive,
+      .negative {
+        align-self: flex-end;
+      }
+    }
   </style>
 </head>
 
+
 <body>
 
-<header>
-  <div class="logo">Nova<span>Card</span></div>
-  <a href="index.html">Back to Home</a>
-</header>
+  <!-- ================================
+       HEADER
+  ================================= -->
 
-<main>
+  <header>
 
-  <div class="badge">DEMO DASHBOARD</div>
-
-  <h1>Welcome, Alex Demo</h1>
-
-  <p class="subtitle">
-    Manage your demonstration NovaCard experience.
-  </p>
-
-  <section class="card">
-
-    <div class="card-brand">NOVACARD</div>
-
-    <div class="number">
-      <span id="cardNumber">•••• •••• •••• 4821</span>
+    <div class="logo">
+      NovaCard
     </div>
 
-    <div class="card-details">
-      <div>
-        CARDHOLDER<br>
-        <strong>DEMO USER</strong>
-      </div>
+    <a href="#">
+      Demo Dashboard
+    </a>
 
-      <div>
-        EXPIRES<br>
-        <strong>12/30</strong>
-      </div>
+  </header>
 
-      <div>
-        DEMO<br>
-        <strong>VISA</strong>
-      </div>
+
+  <!-- ================================
+       MAIN
+  ================================= -->
+
+  <main>
+
+    <div class="badge">
+      DEMO ENVIRONMENT
     </div>
 
-    <div class="demo-watermark">DEMO</div>
+    <h1>
+      Welcome to NovaCard
+    </h1>
 
-  </section>
-
-  <div class="grid">
-
-    <div class="panel">
-      <div class="panel-label">Demo balance</div>
-      <div class="balance">$2,500.00</div>
-      <div class="small">Display balance only</div>
+    <div class="subtitle">
+      Manage your demonstration card and view sample transactions.
     </div>
 
-    <div class="panel">
-      <div class="panel-label">Card status</div>
-      <div id="status" class="status">● Active</div>
-      <div id="statusText" class="small">
-        Demonstration card
+
+    <!-- ================================
+         CARD
+    ================================= -->
+
+    <section class="card">
+
+      <div class="card-brand">
+        NOVACARD
       </div>
+
+      <div class="demo-watermark">
+        DEMO
+      </div>
+
+      <div class="number">
+        <span id="cardNumber">
+          •••• •••• •••• 4821
+        </span>
+      </div>
+
+      <div class="card-details">
+
+        <div>
+          CARDHOLDER<br>
+          <strong>DEMO USER</strong>
+        </div>
+
+        <div>
+          EXPIRES<br>
+          <strong>12/30</strong>
+        </div>
+
+        <div>
+          DEMO<br>
+          <strong>VISA</strong>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ================================
+         DASHBOARD PANELS
+    ================================= -->
+
+    <div class="grid">
+
+
+      <!-- BALANCE -->
+
+      <div class="panel">
+
+        <div class="panel-label">
+          Demo balance
+        </div>
+
+        <div class="balance">
+          $2,500.00
+        </div>
+
+        <div class="small">
+          Display balance only
+        </div>
+
+      </div>
+
+
+      <!-- STATUS -->
+
+      <div class="panel">
+
+        <div class="panel-label">
+          Card status
+        </div>
+
+        <div
+          id="status"
+          class="status">
+          ● Active
+        </div>
+
+        <div
+          id="statusText"
+          class="small">
+          Demonstration card
+        </div>
+
+      </div>
+
+
+      <!-- SECURITY -->
+
+      <div class="panel">
+
+        <div class="panel-label">
+          Security
+        </div>
+
+        <button
+          id="freezeButton"
+          onclick="toggleCard()">
+          Freeze Card
+        </button>
+
+        <button
+          class="secondary"
+          onclick="toggleNumber()">
+          Show Card Number
+        </button>
+
+      </div>
+
     </div>
 
-    <div class="panel">
-      <div class="panel-label">Security</div>
+
+    <!-- ================================
+         TRANSACTIONS
+    ================================= -->
+
+    <section class="transactions">
+
+      <div class="section-title">
+        Recent transactions
+      </div>
+
+
+      <div class="transaction-list">
+
+
+        <div
+          class="transaction"
+          onclick="showTransaction(
+            'Online Store',
+            '-$49.99',
+            'Today'
+          )">
+
+          <div>
+
+            <strong>
+              Online Store
+            </strong>
+
+            <small>
+              Today · Demo transaction
+            </small>
+
+          </div>
+
+          <strong class="negative">
+            -$49.99
+          </strong>
+
+        </div>
+
+
+        <div
+          class="transaction"
+          onclick="showTransaction(
+            'Demo Deposit',
+            '+$500.00',
+            'Yesterday'
+          )">
+
+          <div>
+
+            <strong>
+              Demo Deposit
+            </strong>
+
+            <small>
+              Yesterday · Demonstration
+            </small>
+
+          </div>
+
+          <strong class="positive">
+            +$500.00
+          </strong>
+
+        </div>
+
+
+        <div
+          class="transaction"
+          onclick="showTransaction(
+            'Subscription',
+            '-$12.00',
+            'Sep 25'
+          )">
+
+          <div>
+
+            <strong>
+              Subscription
+            </strong>
+
+            <small>
+              Sep 25 · Demo transaction
+            </small>
+
+          </div>
+
+          <strong class="negative">
+            -$12.00
+          </strong>
+
+        </div>
+
+
+      </div>
+
+    </section>
+
+
+    <!-- ================================
+         ABOUT
+    ================================= -->
+
+    <section class="notice">
+
+      <strong>
+        About this dashboard
+      </strong>
+
+      This is a demonstration interface only.
+      It does not provide real credit, hold funds,
+      issue payment cards, or process real transactions.
+
+    </section>
+
+
+  </main>
+
+
+  <!-- ================================
+       TRANSACTION MODAL
+  ================================= -->
+
+  <div
+    id="transactionModal"
+    class="modal"
+    onclick="handleModalClick(event)">
+
+    <div class="modal-box">
 
       <button
-        id="freezeButton"
-        onclick="toggleCard()">
-        Freeze Card
+        class="close"
+        onclick="closeTransaction()"
+        aria-label="Close">
+        ×
       </button>
 
-      <button
-        class="secondary"
-        onclick="toggleNumber()">
-        Show Number
-      </button>
+      <div class="badge">
+        DEMO TRANSACTION
+      </div>
+
+      <h2 id="modalTitle">
+        Transaction
+      </h2>
+
+      <div
+        id="modalAmount"
+        class="modal-amount">
+      </div>
+
+      <p id="modalDate">
+      </p>
+
+      <div class="modal-info">
+
+        <strong>
+          Status
+        </strong>
+
+        <br>
+
+        Demonstration only
+
+      </div>
+
+      <div class="modal-info">
+
+        <strong>
+          Processing
+        </strong>
+
+        <br>
+
+        No real payment was made
+
+      </div>
+
     </div>
 
-  <div class="transaction" onclick="showTransaction('Online Store', '-$49.99', 'Today')">
-  <div>
-    <strong>Online Store</strong>
-    <small>Today · Demo transaction</small>
-  </div>
-  <strong class="negative">-$49.99</strong>
   </div>
 
-    <div class="transaction" onclick="showTransaction('Demo Deposit', '+$500.00', 'Yesterday')">
-  <div>
-    <strong>Demo Deposit</strong>
-    <small>Yesterday · Demonstration</small>
-  </div>
-  <strong class="positive">+$500.00</strong>
-    </div>
-    <div class="transaction" onclick="showTransaction('Subscription', '-$12.00', 'Sep 25')">
-  <div>
-    <strong>Subscription</strong>
-    <small>Sep 25 · Demo transaction</small>
-  </div>
-  <strong class="negative">-$12.00</strong>
-    </div>
 
-  </section>
+  <!-- ================================
+       JAVASCRIPT
+  ================================= -->
 
-  <section class="notice about-panel">
-    <strong>About this dashboard</strong>
-    <br><br>
-    This is a demonstration interface only. It does not
-    provide real credit, hold funds, issue payment cards,
-    or process real transactions.
-  </section>
+  <script>
 
-</main>
-<div id="transactionModal" class="modal">
-  <div class="modal-box">
+    let cardFrozen = false;
+    let numberVisible = false;
 
-    <button class="close" onclick="closeTransaction()">×</button>
 
-    <div class="badge">DEMO TRANSACTION</div>
+    /* ================================
+       FREEZE / UNFREEZE
+    ================================= */
 
-    <h2 id="modalTitle">Transaction</h2>
+    function toggleCard() {
 
-    <div class="modal-amount" id="modalAmount"></div>
+      cardFrozen = !cardFrozen;
 
-    <p id="modalDate"></p>
+      const status =
+        document.getElementById("status");
 
-    <div class="modal-info">
-      <strong>Status</strong>
-      <span>Demonstration only</span>
-    </div>
+      const statusText =
+        document.getElementById("statusText");
 
-    <div class="modal-info">
-      <strong>Reference</strong>
-      <span>DEMO-4821</span>
-    </div>
+      const button =
+        document.getElementById("freezeButton");
 
-    <button onclick="closeTransaction()">
-      Close
-    </button>
 
-  </div>
-  </div>
-<footer>
-  © 2026 NovaCard · Demonstration website
-</footer>
+      if (cardFrozen) {
 
-<script>
+        status.textContent = "● Frozen";
 
-  let frozen = false;
-  let revealed = false;
+        status.style.color = "#ff6878";
 
-  function toggleCard() {
+        statusText.textContent =
+          "Demonstration card is frozen";
 
-    frozen = !frozen;
+        button.textContent =
+          "Unfreeze Card";
 
-    const status = document.getElementById("status");
-    const statusText = document.getElementById("statusText");
-    const button = document.getElementById("freezeButton");
+        button.classList.add("danger");
 
-    if (frozen) {
+      } else {
 
-      status.textContent = "● Frozen";
-      status.classList.add("frozen");
+        status.textContent = "● Active";
 
-      statusText.textContent =
-        "Demonstration card is frozen";
+        status.style.color = "#50d890";
 
-      button.textContent = "Unfreeze Card";
+        statusText.textContent =
+          "Demonstration card";
 
-    } else {
+        button.textContent =
+          "Freeze Card";
 
-      status.textContent = "● Active";
-      status.classList.remove("frozen");
+        button.classList.remove("danger");
+      }
 
-      statusText.textContent =
-        "Demonstration card";
-
-      button.textContent = "Freeze Card";
-    }
-  }
-
-  function toggleNumber() {
-
-    revealed = !revealed;
-
-    const number = document.getElementById("cardNumber");
-
-    if (revealed) {
-      number.textContent = "4242 4242 4242 4821";
-    } else {
-      number.textContent = "•••• •••• •••• 4821";
-    }
-  }
-function showTransaction(title, amount, date) {
-
-  document.getElementById("modalTitle").textContent = title;
-  document.getElementById("modalAmount").textContent = amount;
-  document.getElementById("modalDate").textContent =
-    date + " · Demo transaction";
-
-  document
-    .getElementById("transactionModal")
-    .classList.add("show");
-}
-
-function closeTransaction() {
-
-  document
-    .getElementById("transactionModal")
-    .classList.remove("show");
-}
-
-document
-  .getElementById("transactionModal")
-  .addEventListener("click", function(event) {
-
-    if (event.target === this) {
-      closeTransaction();
     }
 
-  });
-</script>
+
+    /* ================================
+       CARD NUMBER
+    ================================= */
+
+    function toggleNumber() {
+
+      const number =
+        document.getElementById("cardNumber");
+
+      const button =
+        event.currentTarget;
+
+
+      numberVisible = !numberVisible;
+
+
+      if (numberVisible) {
+
+        number.textContent =
+          "4111 1111 1111 4821";
+
+        button.textContent =
+          "Hide Card Number";
+
+      } else {
+
+        number.textContent =
+          "•••• •••• •••• 4821";
+
+        button.textContent =
+          "Show Card Number";
+      }
+
+    }
+
+
+    /* ================================
+       OPEN TRANSACTION
+    ================================= */
+
+    function showTransaction(
+      title,
+      amount,
+      date
+    ) {
+
+      document.getElementById(
+        "modalTitle"
+      ).textContent = title;
+
+      document.getElementById(
+        "modalAmount"
+      ).textContent = amount;
+
+      document.getElementById(
+        "modalDate"
+      ).textContent =
+        date + " · Demo transaction";
+
+
+      document
+        .getElementById("transactionModal")
+        .classList.add("show");
+
+
+      document.body.style.overflow =
+        "hidden";
+    }
+
+
+    /* ================================
+       CLOSE TRANSACTION
+    ================================= */
+
+    function closeTransaction() {
+
+      document
+        .getElementById("transactionModal")
+        .classList.remove("show");
+
+
+      document.body.style.overflow =
+        "";
+    }
+
+
+    /* ================================
+       CLOSE WHEN CLICKING BACKDROP
+    ================================= */
+
+    function handleModalClick(event) {
+
+      if (
+        event.target ===
+        document.getElementById(
+          "transactionModal"
+        )
+      ) {
+
+        closeTransaction();
+      }
+
+    }
+
+
+    /* ================================
+       ESCAPE KEY
+    ================================= */
+
+    document.addEventListener(
+      "keydown",
+      function(event) {
+
+        if (event.key === "Escape") {
+
+          closeTransaction();
+
+        }
+
+      }
+    );
+
+  </script>
 
 </body>
-        </html>
+  </html>
