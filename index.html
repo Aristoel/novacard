@@ -3,128 +3,355 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NovaCard — Virtual Card</title>
-  <link rel="stylesheet" href="styles.css">
+  <title>NovaCard — Demo Dashboard</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #06111f;
+      color: #fff;
+      min-height: 100vh;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 6%;
+      border-bottom: 1px solid #172a40;
+      background: #071321;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: 800;
+    }
+
+    .logo span {
+      color: #42a5ff;
+    }
+
+    nav a {
+      color: #a9b8c9;
+      text-decoration: none;
+      margin-left: 22px;
+      font-size: 14px;
+    }
+
+    .hero {
+      padding: 60px 6% 45px;
+      text-align: center;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 7px 12px;
+      border-radius: 20px;
+      background: #102943;
+      color: #42a5ff;
+      font-size: 12px;
+      font-weight: bold;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      font-size: 42px;
+      margin-bottom: 12px;
+    }
+
+    .subtitle {
+      color: #9eb0c4;
+      max-width: 600px;
+      margin: auto;
+      line-height: 1.6;
+    }
+
+    .dashboard {
+      width: 88%;
+      max-width: 1050px;
+      margin: 20px auto 60px;
+      display: grid;
+      gap: 20px;
+    }
+
+    .card {
+      background: #0c1c2e;
+      border: 1px solid #1c344d;
+      border-radius: 18px;
+      padding: 25px;
+      box-shadow: 0 15px 40px rgba(0,0,0,.2);
+    }
+
+    .virtual-card {
+      min-height: 220px;
+      padding: 28px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, #172e49, #071525);
+      border: 1px solid #315475;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .virtual-card::after {
+      content: "DEMO";
+      position: absolute;
+      right: -25px;
+      bottom: 18px;
+      transform: rotate(-25deg);
+      color: rgba(255,255,255,.08);
+      font-size: 60px;
+      font-weight: bold;
+    }
+
+    .card-brand {
+      color: #42a5ff;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    .card-number {
+      margin-top: 55px;
+      font-size: 24px;
+      letter-spacing: 4px;
+    }
+
+    .card-bottom {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 25px;
+      color: #9eb0c4;
+      font-size: 12px;
+    }
+
+    .balance {
+      font-size: 34px;
+      margin: 10px 0;
+    }
+
+    .muted {
+      color: #91a5ba;
+      font-size: 14px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .button {
+      display: inline-block;
+      border: none;
+      border-radius: 9px;
+      padding: 13px 20px;
+      margin-top: 18px;
+      background: #42a5ff;
+      color: #06111f;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .button.secondary {
+      background: transparent;
+      color: #fff;
+      border: 1px solid #315475;
+    }
+
+    .transactions {
+      margin-top: 20px;
+    }
+
+    .transaction {
+      display: flex;
+      justify-content: space-between;
+      padding: 17px 0;
+      border-bottom: 1px solid #1c344d;
+    }
+
+    .transaction:last-child {
+      border-bottom: none;
+    }
+
+    .amount {
+      font-weight: bold;
+    }
+
+    .positive {
+      color: #55d98b;
+    }
+
+    .negative {
+      color: #ff7b7b;
+    }
+
+    .status {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 15px;
+      background: #123521;
+      color: #55d98b;
+      font-size: 11px;
+      margin-top: 12px;
+    }
+
+    footer {
+      text-align: center;
+      color: #71859a;
+      padding: 35px;
+      border-top: 1px solid #172a40;
+      font-size: 13px;
+    }
+
+    @media (max-width: 700px) {
+      h1 {
+        font-size: 34px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      nav a {
+        margin-left: 8px;
+      }
+
+      .card-number {
+        font-size: 19px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-  <header class="navbar">
-    <div class="logo">Nova<span>Card</span></div>
+<header>
+  <div class="logo">Nova<span>Card</span></div>
 
-    <nav>
-      <a href="#features">Features</a>
-      <a href="#security">Security</a>
-      <a href="#about">About</a>
-      <a class="login-btn" href="login.html">Log in</a>
-    </nav>
-  </header>
+  <nav>
+    <a href="#dashboard">Dashboard</a>
+    <a href="#transactions">Transactions</a>
+  </nav>
+</header>
 
-  <main>
+<section class="hero">
+  <div class="badge">NOVACARD DEMO</div>
 
-    <section class="hero">
-      <div class="hero-content">
-        <p class="eyebrow">THE MODERN DIGITAL CARD</p>
+  <h1>Your digital card dashboard.</h1>
 
-        <h1>
-          Your money.<br>
-          Your <span>NovaCard.</span>
-        </h1>
+  <p class="subtitle">
+    A demonstration interface for managing a virtual-card experience.
+    This prototype does not issue real credit or process real payments.
+  </p>
+</section>
 
-        <p class="hero-text">
-          A modern virtual-card experience designed for secure,
-          convenient online payments.
-        </p>
+<main class="dashboard" id="dashboard">
 
-        <div class="hero-buttons">
-          <a href="signup.html" class="primary-btn">Get Started</a>
-          <a href="#features" class="secondary-btn">Explore NovaCard</a>
-        </div>
-      </div>
+  <section class="virtual-card">
+    <div class="card-brand">NOVACARD</div>
 
-      <div class="card-container">
-        <div class="virtual-card">
-          <div class="card-top">
-            <span>NOVACARD</span>
-            <span class="chip">▰</span>
-          </div>
+    <div class="card-number">
+      •••• &nbsp; •••• &nbsp; •••• &nbsp; 4821
+    </div>
 
-          <div class="card-number">
-            •••• &nbsp; •••• &nbsp; •••• &nbsp; 4821
-          </div>
-
-          <div class="card-bottom">
-            <div>
-              <small>CARDHOLDER</small>
-              <strong>DEMO USER</strong>
-            </div>
-
-            <div>
-              <small>EXPIRES</small>
-              <strong>12/30</strong>
-            </div>
-
-            <div class="visa">VISA</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="features" class="features">
-      <div class="section-title">
-        <p class="eyebrow">FEATURES</p>
-        <h2>Everything in one place.</h2>
-      </div>
-
-      <div class="feature-grid">
-
-        <div class="feature">
-          <div class="icon">💳</div>
-          <h3>Virtual Card</h3>
-          <p>
-            Access your virtual card from your secure NovaCard dashboard.
-          </p>
-        </div>
-
-        <div class="feature">
-          <div class="icon">🔒</div>
-          <h3>Security</h3>
-          <p>
-            Built with security controls designed to protect your account.
-          </p>
-        </div>
-
-        <div class="feature">
-          <div class="icon">⚡</div>
-          <h3>Fast Payments</h3>
-          <p>
-            Designed for convenient online payments once connected to
-            an authorized card issuer.
-          </p>
-        </div>
-
-      </div>
-    </section>
-
-    <section id="security" class="security">
+    <div class="card-bottom">
       <div>
-        <p class="eyebrow">SECURITY FIRST</p>
-        <h2>Control your card from anywhere.</h2>
-        <p>
-          Freeze your card, review transactions and manage your account
-          from one secure dashboard.
-        </p>
+        CARDHOLDER<br>
+        <strong>DEMO USER</strong>
       </div>
 
-      <a href="login.html" class="primary-btn">Open Dashboard</a>
+      <div>
+        EXPIRES<br>
+        <strong>12/30</strong>
+      </div>
+
+      <div>
+        <strong>VISA</strong>
+      </div>
+    </div>
+  </section>
+
+  <div class="grid">
+
+    <section class="card">
+      <div class="muted">Demo balance</div>
+      <div class="balance">$2,500.00</div>
+      <div class="muted">
+        Display balance only — no real funds.
+      </div>
     </section>
 
-  </main>
+    <section class="card">
+      <div class="muted">Card status</div>
+      <h2 style="margin-top:10px;">Active</h2>
+      <div class="status">● Demo card active</div>
+    </section>
 
-  <footer id="about">
-    <div class="logo">Nova<span>Card</span></div>
-    <p>© 2026 NovaCard. Demo platform.</p>
-  </footer>
+    <section class="card">
+      <div class="muted">Security</div>
+      <h2 style="margin-top:10px;">Protected</h2>
+      <p class="muted" style="margin-top:8px;">
+        Demo security controls
+      </p>
+
+      <button class="button secondary" onclick="freezeCard()">
+        Freeze Card
+      </button>
+    </section>
+
+  </div>
+
+  <section class="card transactions" id="transactions">
+
+    <h2>Recent activity</h2>
+
+    <div class="transaction">
+      <div>
+        <strong>Online Store</strong><br>
+        <span class="muted">Today · Demo transaction</span>
+      </div>
+
+      <div class="amount negative">-$49.99</div>
+    </div>
+
+    <div class="transaction">
+      <div>
+        <strong>Demo Deposit</strong><br>
+        <span class="muted">Yesterday · Demonstration</span>
+      </div>
+
+      <div class="amount positive">+$500.00</div>
+    </div>
+
+    <div class="transaction">
+      <div>
+        <strong>Subscription</strong><br>
+        <span class="muted">Sep 25 · Demo transaction</span>
+      </div>
+
+      <div class="amount negative">-$12.00</div>
+    </div>
+
+  </section>
+
+</main>
+
+<footer>
+  © 2026 NovaCard · Demonstration website · No real financial services
+</footer>
+
+<script>
+  function freezeCard() {
+    alert(
+      "Demo mode: the card has been simulated as frozen. No real card was affected."
+    );
+  }
+</script>
 
 </body>
-            </html>
+                                    </html>
