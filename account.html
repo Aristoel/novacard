@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>NovaCard — Demo Account</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #06111f;
+      color: #fff;
+      min-height: 100vh;
+    }
+
+    header {
+      padding: 18px 7%;
+      border-bottom: 1px solid #172a40;
+      background: #071321;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: 800;
+    }
+
+    .logo span {
+      color: #42a5ff;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 470px;
+      margin: 70px auto;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 7px 12px;
+      border-radius: 20px;
+      background: #102943;
+      color: #42a5ff;
+      font-size: 11px;
+      font-weight: bold;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      font-size: 36px;
+      margin-bottom: 12px;
+    }
+
+    .intro {
+      color: #9eb0c4;
+      line-height: 1.6;
+      margin-bottom: 30px;
+    }
+
+    .panel {
+      background: #0c1c2e;
+      border: 1px solid #1c344d;
+      border-radius: 18px;
+      padding: 25px;
+    }
+
+    label {
+      display: block;
+      color: #b8c7d7;
+      font-size: 14px;
+      margin: 18px 0 8px;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      border-radius: 9px;
+      border: 1px solid #29435e;
+      background: #071525;
+      color: #fff;
+      outline: none;
+      font-size: 15px;
+    }
+
+    input:focus {
+      border-color: #42a5ff;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 24px;
+      padding: 14px;
+      border: none;
+      border-radius: 9px;
+      background: #42a5ff;
+      color: #06111f;
+      font-weight: bold;
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    .notice {
+      margin-top: 20px;
+      padding: 14px;
+      border-radius: 10px;
+      background: #101f30;
+      color: #91a5ba;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .back {
+      display: block;
+      text-align: center;
+      margin-top: 25px;
+      color: #42a5ff;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    footer {
+      text-align: center;
+      color: #71859a;
+      padding: 30px;
+      font-size: 12px;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">Nova<span>Card</span></div>
+</header>
+
+<main class="container">
+
+  <div class="badge">DEMO ACCOUNT</div>
+
+  <h1>Get started.</h1>
+
+  <p class="intro">
+    Create a demonstration profile to explore the NovaCard
+    interface. This prototype does not create a real financial
+    account or issue a real card.
+  </p>
+
+  <section class="panel">
+
+    <form id="demoForm">
+
+      <label for="name">Display name</label>
+      <input
+        id="name"
+        type="text"
+        placeholder="Demo User"
+        required
+      >
+
+      <label for="email">Demo email</label>
+      <input
+        id="email"
+        type="email"
+        placeholder="demo@example.com"
+        required
+      >
+
+      <button type="submit">
+        Enter Demo Dashboard
+      </button>
+
+    </form>
+
+    <div class="notice">
+      Demo mode only. Do not enter real passwords,
+      bank-account information, payment-card numbers,
+      Social Security numbers, or other sensitive financial
+      information.
+    </div>
+
+  </section>
+
+  <a class="back" href="index.html">
+    ← Back to NovaCard
+  </a>
+
+</main>
+
+<footer>
+  © 2026 NovaCard · Demonstration website
+</footer>
+
+<script>
+  document
+    .getElementById("demoForm")
+    .addEventListener("submit", function(event) {
+
+      event.preventDefault();
+
+      const name = document.getElementById("name").value.trim();
+
+      if (!name) {
+        return;
+      }
+
+      localStorage.setItem("novaDemoName", name);
+
+      window.location.href = "dashboard.html";
+    });
+</script>
+
+</body>
+  </html>
