@@ -1336,7 +1336,64 @@
     console.error("Lithic connection failed:", error);
   }
 })();
-</script>
+  // LIVE LITHIC SANDBOX TRANSACTIONS
+(async function loadLithicTransactions() {
+  try {
+    const response = await fetch("/api/lithic-test");
+    const data = await response.json();
+
+    if (!data.connected || !data.transactions) return;
+
+    const heading = [...document.querySelectorAll("h1,h2,h3,h4")]
+      .find(el => el.textContent.trim().toLowerCase() === "recent transactions");
+
+    if (!heading) return;
+
+    const panel = document.createElement("div");
+    panel.style.cssText = `
+      margin-top:16px;
+      padding:18px;
+      border-radius:14px;
+      background:#0b2034;
+      border:1px solid #1d4f7a;
+    `;
+
+    panel.innerHTML = `
+      <div style="color:#42a5ff;font-weight:700;margin-bottom:12px;">
+        LIVE LITHIC SANDBOX
+      </div>
+    `;
+
+    data.transactions.forEach(tx => {
+      const amount = (Number(tx.amount || 0) / 100).toFixed(2);
+      const merchant = tx.merchant?.descriptor || "Unknown merchant";
+      const sign = Number(tx.amount) < 0 ? "-" : "";
+
+      const item = document.createElement("div");
+      item.style.cssText = `
+        padding:12px 0;
+        border-top:1px solid #18364d;
+        color:white;
+      `;
+
+      item.innerHTML = `
+        <strong>${merchant}</strong>
+        <div style="margin-top:5px;color:#9db3c8;">
+          ${sign}$${Math.abs(Number(amount)).toFixed(2)}
+          • ${tx.result || "UNKNOWN"}
+          • ${tx.status || "UNKNOWN"}
+        </div>
+      `;
+
+      panel.appendChild(item);
+    });
+
+    heading.parentElement.appendChild(panel);
+
+  } catch (error) {
+    console.error("Lithic transactions failed:", error);
+  }
+})();
   </script>
 
 </body>
