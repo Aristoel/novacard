@@ -1256,9 +1256,10 @@
 
       }
     );
-// =============================
-// LITHIC SANDBOX CONNECTION
-// =============================
+
+// ===========================
+// LITHIC SANDBOX CARD DISPLAY
+// ===========================
 (async function connectLithic() {
   try {
     const response = await fetch("/api/lithic-test");
@@ -1270,16 +1271,48 @@
     }
 
     const card = data.cards[0];
+    const lastFour = card.last_four;
 
+    // Update any existing visible 4821 card references
+    const walker = document.createTreeWalker(
+      document.body,
+      NodeFilter.SHOW_TEXT
+    );
+
+    const textNodes = [];
+    let node;
+
+    while ((node = walker.nextNode())) {
+      textNodes.push(node);
+    }
+
+    textNodes.forEach((textNode) => {
+      if (textNode.nodeValue.includes("4821")) {
+        textNode.nodeValue = textNode.nodeValue.replaceAll(
+          "4821",
+          lastFour
+        );
+      }
+
+      if (textNode.nodeValue.includes("4111 1111 1111")) {
+        textNode.nodeValue = textNode.nodeValue.replace(
+          /4111 1111 1111 \d{4}/g,
+          "•••• •••• •••• " + lastFour
+        );
+      }
+    });
+
+    // Create a small live Sandbox status indicator
     const badge = document.createElement("div");
+
     badge.textContent =
-      "Lithic Sandbox • Card ending " + card.last_four;
+      "Lithic Sandbox • VISA • •••• " + lastFour;
 
     badge.style.cssText = `
       position: fixed;
       bottom: 16px;
       left: 16px;
-      z-index: 9999;
+      z-index: 99999;
       padding: 10px 14px;
       border-radius: 10px;
       background: #0d1b2a;
@@ -1294,13 +1327,16 @@
     console.log("Lithic Sandbox connected:", {
       last_four: card.last_four,
       state: card.state,
-      type: card.type
+      type: card.type,
+      exp_month: card.exp_month,
+      exp_year: card.exp_year
     });
 
   } catch (error) {
     console.error("Lithic connection failed:", error);
   }
 })();
+</script>
   </script>
 
 </body>
