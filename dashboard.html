@@ -1394,6 +1394,167 @@
     console.error("Lithic transactions failed:", error);
   }
 })();
+    // ===============================
+// LITHIC TRANSACTION DETAILS
+// ===============================
+(async function showLithicTransactionDetails() {
+  try {
+    const response = await fetch("/api/lithic-test");
+    const data = await response.json();
+
+    if (!data.connected || !data.transactions?.length) {
+      return;
+    }
+
+    const tx = data.transactions[0];
+
+    const oldPanel = document.getElementById(
+      "lithic-live-details"
+    );
+
+    if (oldPanel) {
+      oldPanel.remove();
+    }
+
+    const panel = document.createElement("div");
+
+    panel.id = "lithic-live-details";
+
+    panel.style.cssText = `
+      margin:24px 0;
+      padding:20px;
+      border-radius:16px;
+      background:#081827;
+      border:1px solid #24557c;
+      color:white;
+      font-family:Arial,sans-serif;
+    `;
+
+    const authorizationAmount =
+      Math.abs(Number(
+        tx.authorization_amount || tx.amount || 0
+      )) / 100;
+
+    const settledAmount =
+      Math.abs(Number(
+        tx.settled_amount || 0
+      )) / 100;
+
+    const authorizedDate = tx.created
+      ? new Date(tx.created).toLocaleString()
+      : "N/A";
+
+    const merchant =
+      tx.merchant?.descriptor ||
+      "Unknown merchant";
+
+    panel.innerHTML = `
+      <div style="
+        font-size:18px;
+        font-weight:700;
+        margin-bottom:18px;
+        color:#42a5ff;
+      ">
+        LIVE LITHIC TRANSACTION
+      </div>
+
+      <div style="
+        display:grid;
+        gap:0;
+        border-top:1px solid #24445d;
+      ">
+
+        <div style="padding:13px 0;border-bottom:1px solid #24445d;">
+          <span style="color:#9db3c8;">Card last four</span>
+          <strong style="float:right;">
+            •••• ${data.card?.last_four || "N/A"}
+          </strong>
+        </div>
+
+        <div style="padding:13px 0;border-bottom:1px solid #24445d;">
+          <span style="color:#9db3c8;">Merchant</span>
+          <strong style="float:right;">
+            ${merchant}
+          </strong>
+        </div>
+
+        <div style="padding:13px 0;border-bottom:1px solid #24445d;">
+          <span style="color:#9db3c8;">Amount authorized</span>
+          <strong style="float:right;">
+            -$${authorizationAmount.toFixed(2)}
+          </strong>
+        </div>
+
+        <div style="padding:13px 0;border-bottom:1px solid #24445d;">
+          <span style="color:#9db3c8;">Amount cleared</span>
+          <strong style="float:right;">
+            $${settledAmount.toFixed(2)}
+          </strong>
+        </div>
+
+        <div style="padding:13px 0;border-bottom:1px solid #24445d;">
+          <span style="color:#9db3c8;">Network</span>
+          <strong style="float:right;">
+            ${tx.network || "VISA"}
+          </strong>
+        </div>
+
+        <div style="padding:13px 0;border-bottom:1px solid #24445d;">
+          <span style="color:#9db3c8;">Authorization code</span>
+          <strong style="float:right;">
+            ${tx.authorization_code || "N/A"}
+          </strong>
+        </div>
+
+        <div style="padding:13px 0;border-bottom:1px solid #24445d;">
+          <span style="color:#9db3c8;">Status</span>
+          <strong style="float:right;">
+            ${tx.status}
+          </strong>
+        </div>
+
+        <div style="padding:13px 0;border-bottom:1px solid #24445d;">
+          <span style="color:#9db3c8;">Result</span>
+          <strong style="float:right;">
+            ${tx.result}
+          </strong>
+        </div>
+
+        <div style="padding:13px 0;">
+          <span style="color:#9db3c8;">Date authorized</span>
+          <strong style="float:right;">
+            ${authorizedDate}
+          </strong>
+        </div>
+
+      </div>
+
+      <div style="
+        margin-top:18px;
+        padding:10px;
+        border-radius:8px;
+        background:#0d2539;
+        color:#42a5ff;
+        font-size:12px;
+        text-align:center;
+      ">
+        Lithic ${data.environment || "sandbox"} • Live API data
+      </div>
+    `;
+
+    const container =
+      document.querySelector("main") ||
+      document.body;
+
+    container.appendChild(panel);
+
+  } catch (error) {
+    console.error(
+      "Lithic transaction display failed:",
+      error
+    );
+  }
+})();
   </script>
 
 </body>
