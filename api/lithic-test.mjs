@@ -1,11 +1,12 @@
 export async function GET() {
   const apiKey = process.env.LITHIC_API_KEY;
+  const environment = process.env.LITHIC_ENVIRONMENT || "sandbox";
 
   if (!apiKey) {
     return new Response(
       JSON.stringify({
         connected: false,
-        error: "Lithic API key is not configured"
+        error: "LITHIC_API_KEY is not configured"
       }),
       {
         status: 500,
@@ -14,13 +15,18 @@ export async function GET() {
     );
   }
 
+  const baseUrl =
+    environment === "production"
+      ? "https://api.lithic.com/v1"
+      : "https://sandbox.lithic.com/v1";
+
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 8000);
 
   try {
-    // Get the available Sandbox cards
+    // Get cards
     const cardsResponse = await fetch(
-      "https://sandbox.lithic.com/v1/cards?page_size=10",
+      `${baseUrl}/cards?page_size=10`,
       {
         method: "GET",
         headers: {
@@ -37,6 +43,7 @@ export async function GET() {
       return new Response(
         JSON.stringify({
           connected: false,
+          environment,
           lithic_status: cardsResponse.status,
           cards: [],
           transactions: [],
@@ -56,8 +63,9 @@ export async function GET() {
       return new Response(
         JSON.stringify({
           connected: true,
+          environment,
           lithic_status: 200,
-          cards: [],
+          card: null,
           transactions: [],
           error: null
         }),
@@ -68,11 +76,11 @@ export async function GET() {
       );
     }
 
-    // Get transactions belonging to this card
+    // Get transactions for the card
     const transactionsResponse = await fetch(
-      "https://sandbox.lithic.com/v1/transactions?card_token=" +
-        encodeURIComponent(card.token) +
-        "&page_size=10",
+      `${baseUrl}/transactions?card_token=${encodeURIComponent(
+        card.token
+      )}&page_size=10`,
       {
         method: "GET",
         headers: {
@@ -86,17 +94,18 @@ export async function GET() {
     const transactionsData = await transactionsResponse.json();
 
     const transactions = transactionsResponse.ok
-      ? (transactionsData.data || []).map((transaction) => ({
-          token: transaction.token,
-          amount: transaction.amount,
-          result: transaction.result,
-          status: transaction.status,
-          created: transaction.created,
-          merchant: transaction.merchant
+      ? (transactionsData.data || []).map((tx) => ({
+          token: tx.token,
+          amount: tx.amount,
+          result: tx.result,
+          status: tx.status,
+          created: tx.created,
+          merchant: tx.merchant
             ? {
-                descriptor: transaction.merchant.descriptor || "Unknown merchant",
-                city: transaction.merchant.city || "",
-                country: transaction.merchant.country || ""
+                descriptor:
+                  tx.merchant.descriptor || "Unknown merchant",
+                city: tx.merchant.city || "",
+                country: tx.merchant.country || ""
               }
             : null
         }))
@@ -105,6 +114,7 @@ export async function GET() {
     return new Response(
       JSON.stringify({
         connected: true,
+        environment,
         lithic_status: 200,
 
         card: {
@@ -132,9 +142,10 @@ export async function GET() {
     return new Response(
       JSON.stringify({
         connected: false,
+        environment,
         error:
           error.name === "AbortError"
-            ? "Lithic Sandbox request timed out after 8 seconds"
+            ? "Lithic request timed out"
             : error.message
       }),
       {
