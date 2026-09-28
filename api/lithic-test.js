@@ -13,13 +13,21 @@ export default async function handler(request) {
 
   if (!apiKey) {
     return new Response(
-      JSON.stringify({ error: "Lithic API key is not configured" }),
+      JSON.stringify({
+        connected: false,
+        error: "Lithic API key is not configured"
+      }),
       {
         status: 500,
         headers: { "Content-Type": "application/json" }
       }
     );
   }
+
+  const controller = new AbortController();
+
+  // Stop waiting after 8 seconds instead of allowing Vercel to time out
+  const timeout = setTimeout(() => controller.abort(), 8000);
 
   try {
     const response = await fetch(
@@ -29,7 +37,8 @@ export default async function handler(request) {
         headers: {
           Authorization: apiKey,
           Accept: "application/json"
-        }
+        },
+        signal: controller.signal
       }
     );
 
@@ -38,7 +47,9 @@ export default async function handler(request) {
     if (!response.ok) {
       return new Response(
         JSON.stringify({
+          connected: false,
           error: "Lithic request failed",
+          status: response.status,
           details: data
         }),
         {
@@ -70,13 +81,18 @@ export default async function handler(request) {
   } catch (error) {
     return new Response(
       JSON.stringify({
-        error: "Server error",
+        connected: false,
+        error: error.name === "AbortError"
+          ? "Lithic request timed out after 8 seconds"
+          : "Lithic connection failed",
         message: error.message
       }),
       {
-        status: 500,
+        status: 502,
         headers: { "Content-Type": "application/json" }
       }
     );
+  } finally {
+    clearTimeout(timeout);
   }
       }
