@@ -1256,7 +1256,51 @@
 
       }
     );
+// =============================
+// LITHIC SANDBOX CONNECTION
+// =============================
+(async function connectLithic() {
+  try {
+    const response = await fetch("/api/lithic-test");
+    const data = await response.json();
 
+    if (!data.connected || !data.cards || data.cards.length === 0) {
+      console.log("Lithic Sandbox: no cards found");
+      return;
+    }
+
+    const card = data.cards[0];
+
+    const badge = document.createElement("div");
+    badge.textContent =
+      "Lithic Sandbox • Card ending " + card.last_four;
+
+    badge.style.cssText = `
+      position: fixed;
+      bottom: 16px;
+      left: 16px;
+      z-index: 9999;
+      padding: 10px 14px;
+      border-radius: 10px;
+      background: #0d1b2a;
+      color: #42a5ff;
+      border: 1px solid #1d4f7a;
+      font: 600 13px Arial, sans-serif;
+      box-shadow: 0 6px 20px rgba(0,0,0,.3);
+    `;
+
+    document.body.appendChild(badge);
+
+    console.log("Lithic Sandbox connected:", {
+      last_four: card.last_four,
+      state: card.state,
+      type: card.type
+    });
+
+  } catch (error) {
+    console.error("Lithic connection failed:", error);
+  }
+})();
   </script>
 
 </body>
