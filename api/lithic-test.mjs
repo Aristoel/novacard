@@ -18,7 +18,8 @@ export async function GET() {
   const timeout = setTimeout(() => controller.abort(), 8000);
 
   try {
-    const response = await fetch(
+    // Get the available Sandbox cards
+    const cardsResponse = await fetch(
       "https://sandbox.lithic.com/v1/cards?page_size=10",
       {
         method: "GET",
@@ -30,24 +31,100 @@ export async function GET() {
       }
     );
 
-    const data = await response.json();
+    const cardsData = await cardsResponse.json();
+
+    if (!cardsResponse.ok) {
+      return new Response(
+        JSON.stringify({
+          connected: false,
+          lithic_status: cardsResponse.status,
+          cards: [],
+          transactions: [],
+          error: cardsData
+        }),
+        {
+          status: cardsResponse.status,
+          headers: { "Content-Type": "application/json" }
+        }
+      );
+    }
+
+    const cards = cardsData.data || [];
+    const card = cards[0];
+
+    if (!card) {
+      return new Response(
+        JSON.stringify({
+          connected: true,
+          lithic_status: 200,
+          cards: [],
+          transactions: [],
+          error: null
+        }),
+        {
+          status: 200,
+          headers: { "Content-Type": "application/json" }
+        }
+      );
+    }
+
+    // Get transactions belonging to this card
+    const transactionsResponse = await fetch(
+      "https://sandbox.lithic.com/v1/transactions?card_token=" +
+        encodeURIComponent(card.token) +
+        "&page_size=10",
+      {
+        method: "GET",
+        headers: {
+          Authorization: apiKey,
+          Accept: "application/json"
+        },
+        signal: controller.signal
+      }
+    );
+
+    const transactionsData = await transactionsResponse.json();
+
+    const transactions = transactionsResponse.ok
+      ? (transactionsData.data || []).map((transaction) => ({
+          token: transaction.token,
+          amount: transaction.amount,
+          result: transaction.result,
+          status: transaction.status,
+          created: transaction.created,
+          merchant: transaction.merchant
+            ? {
+                descriptor: transaction.merchant.descriptor || "Unknown merchant",
+                city: transaction.merchant.city || "",
+                country: transaction.merchant.country || ""
+              }
+            : null
+        }))
+      : [];
 
     return new Response(
       JSON.stringify({
-        connected: response.ok,
-        lithic_status: response.status,
-        cards: response.ok ? (data.data || []).map((card) => ({
+        connected: true,
+        lithic_status: 200,
+
+        card: {
           token: card.token,
           last_four: card.last_four,
           state: card.state,
           type: card.type,
           exp_month: card.exp_month,
           exp_year: card.exp_year
-        })) : [],
-        error: response.ok ? null : data
+        },
+
+        transactions,
+
+        transaction_status: transactionsResponse.status,
+        transaction_error: transactionsResponse.ok
+          ? null
+          : transactionsData
       }),
       {
-        status: response.ok ? 200 : response.status,
+        status: 200,
         headers: { "Content-Type": "application/json" }
       }
     );
@@ -68,4 +145,4 @@ export async function GET() {
   } finally {
     clearTimeout(timeout);
   }
-        }
+          }
